@@ -1,3 +1,7 @@
+package service;
+
+import model.*;
+
 import java.util.PriorityQueue;
 
 public class ReservationManager {
