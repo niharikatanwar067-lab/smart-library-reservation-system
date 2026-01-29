@@ -19,3 +19,11 @@ A Java-based library management system that supports fast book search, priority-
 
 ## Project Status
 In development
+
+## Sample Workflow
+- Add books to the library
+- Search books using fast prefix search
+- Borrow available books
+- Queue reservations based on priority
+- Automatically assign returned books to waiting users
+- Analyze demand for inventory decisions
