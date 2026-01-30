@@ -4,33 +4,92 @@ import dsa.*;
 
 public class Main {
 
+    private static LibraryService libraryService;
+
     public static void main(String[] args) {
 
-        LibraryService library = new LibraryService();
+        System.out.println("===== SMART LIBRARY MANAGEMENT SYSTEM =====\n");
 
-        // Add books
-        library.addBook(new Book("Harry Potter", "J.K. Rowling", "Fantasy"));
-        library.addBook(new Book("The Hobbit", "J.R.R. Tolkien", "Fantasy"));
-        library.addBook(new Book("Atomic Habits", "James Clear", "Self Help"));
+        libraryService = new LibraryService();
 
-        // Create users
-        User alice = new User("Alice", 1);   // student
-        User bob = new User("Bob", 3);       // faculty
-        User charlie = new User("Charlie", 2);
+        setupBooks();
+        setupUsers();
+        searchBooks();
+        issueBooks();
+        returnBook();
+        showDemandAnalysis();
+        showRecommendations();
 
-        // Search books
-        library.searchBook("Harry Potter");
-        library.searchBook("Unknown Book");
+        System.out.println("\n===== END OF SESSION =====");
+    }
 
-        // Borrowing
-        library.requestBook("Harry Potter", alice);
-        library.requestBook("Harry Potter", charlie);
-        library.requestBook("Harry Potter", bob);
+    // 1. Add books to library
+    private static void setupBooks() {
+        System.out.println("Adding books to library...");
 
-        // Return book
-        library.returnBook("Harry Potter");
+        libraryService.addBook(new Book("Harry Potter"));
+        libraryService.addBook(new Book("Lord of the Rings"));
+        libraryService.addBook(new Book("Percy Jackson"));
 
-        // Demand insight
-        library.showMostDemandedBook();
+        System.out.println();
+    }
+
+    // 2. Register users
+    private static void setupUsers() {
+        System.out.println("Registering users...");
+
+        libraryService.registerUser(new User("Alice", 2));
+        libraryService.registerUser(new User("Bob", 1));
+        libraryService.registerUser(new User("Charlie", 3));
+
+        System.out.println();
+    }
+
+    // 3. Search books using Trie
+    private static void searchBooks() {
+        System.out.println("Searching books...");
+
+        libraryService.searchBook("Har");
+        libraryService.searchBook("Lor");
+
+        System.out.println();
+    }
+
+    // 4. Issue books & create reservations
+    private static void issueBooks() {
+        System.out.println("Issuing books...");
+
+        libraryService.issueBook("Harry Potter", "Alice");
+        libraryService.issueBook("Harry Potter", "Bob");
+        libraryService.issueBook("Harry Potter", "Charlie");
+
+        System.out.println();
+    }
+
+    // 5. Return book & auto-assign
+    private static void returnBook() {
+        System.out.println("Returning book...");
+
+        libraryService.returnBook("Harry Potter");
+
+        System.out.println();
+    }
+
+    // 6. Show demand analysis
+    private static void showDemandAnalysis() {
+        System.out.println("Demand analysis...");
+
+        libraryService.showMostDemandedBook();
+
+        System.out.println();
+    }
+
+    // 7. Show recommendations
+    private static void showRecommendations() {
+        System.out.println("Recommendations...");
+
+        libraryService.showRecommendations("Alice");
+
+        System.out.println();
     }
 }
