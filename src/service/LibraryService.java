@@ -1,75 +1,44 @@
 package service;
 
-import model.*;
-import dsa.*;
-
-import java.util.HashMap;
+import model.Book;
+import model.User;
+import java.util.*;
 
 public class LibraryService {
 
-    private HashMap<String, Book> books;
-    private Trie trie;
-    private ReservationManager reservationManager;
-    private DemandAnalyzer demandAnalyzer;
-
-    public LibraryService() {
-        books = new HashMap<>();
-        trie = new Trie();
-        reservationManager = new ReservationManager();
-        demandAnalyzer = new DemandAnalyzer();
-    }
+    private Map<String, Book> books = new HashMap<>();
+    private Map<String, User> users = new HashMap<>();
 
     public void addBook(Book book) {
-        books.put(book.title.toLowerCase(), book);
-        trie.insert(book.title);
+        books.put(book.getTitle().toLowerCase(), book);
     }
 
-    public void requestBook(String title, User user) {
-        title = title.toLowerCase();
-        demandAnalyzer.recordRequest(title);
+    public void registerUser(User user) {
+        users.put(user.getName(), user);
+        System.out.println("User registered: " + user.getName());
+    }
 
-        Book book = books.get(title);
+    public void issueBook(String title, String userName) {
+        Book book = books.get(title.toLowerCase());
+        User user = users.get(userName);
 
-        if (book != null && book.available) {
-            book.available = false;
-            System.out.println(user.name + " borrowed \"" + book.title + "\"");
+        if (book == null || user == null) {
+            System.out.println("Invalid book or user");
+            return;
+        }
+
+        if (book.isAvailable()) {
+            book.setAvailable(false);
+            System.out.println(user.getName() + " borrowed \"" + book.getTitle() + "\"");
         } else {
-            reservationManager.addToQueue(user);
-            System.out.println(
-                "Book unavailable. " + user.name + " added to reservation queue."
-            );
+            System.out.println("Book unavailable. Added to reservation queue.");
         }
     }
 
-    public void returnBook(String title) {
-        title = title.toLowerCase();
-        Book book = books.get(title);
-
-        if (book == null) return;
-
-        if (reservationManager.hasWaitingUsers()) {
-            User nextUser = reservationManager.getNextUser();
-            System.out.println(
-                nextUser.name + " borrowed \"" + book.title + "\" from reservation queue."
-            );
-        } else {
-            book.available = true;
-            System.out.println("\"" + book.title + "\" is now available.");
-        }
-    }
-
-    public void searchBook(String title) {
-        if (trie.search(title)) {
-            System.out.println("Book found: " + title);
-        } else {
-            System.out.println("Book not found: " + title);
-        }
-    }
-
-    public void showMostDemandedBook() {
-        String book = demandAnalyzer.getMostDemandedBook();
-        if (book != null) {
-            System.out.println("Most demanded book: " + book);
-        }
+    public void showRecommendations(String userName) {
+        System.out.println("Recommendations for " + userName + ":");
+        books.values().stream()
+                .filter(Book::isAvailable)
+                .forEach(b -> System.out.println("- " + b.getTitle()));
     }
 }
