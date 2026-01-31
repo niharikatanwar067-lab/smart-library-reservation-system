@@ -27,9 +27,9 @@ public class Main {
     private static void setupBooks() {
         System.out.println("Adding books to library...");
 
-        libraryService.addBook(new Book("Harry Potter"));
-        libraryService.addBook(new Book("Lord of the Rings"));
-        libraryService.addBook(new Book("Percy Jackson"));
+        libraryService.addBook(new Book("Harry Potter", "J.K. Rowling", "Fantasy"));
+        libraryService.addBook(new Book("Lord of the Rings", "J.R.R. Tolkien", "Fantasy"));
+        libraryService.addBook(new Book("Percy Jackson", "Rick Riordan", "Mythology"));
 
         System.out.println();
     }
