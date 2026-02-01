@@ -19,8 +19,8 @@ public class LibraryService {
     }
 
     public void searchBook(String keyword) {
-    System.out.println("Search results for \"" + keyword + "\":");
-    books.values().stream()
+        System.out.println("Search results for \"" + keyword + "\":");
+        books.values().stream()
             .filter(b -> b.getTitle().toLowerCase().contains(keyword.toLowerCase()))
             .forEach(b -> System.out.println("- " + b.getTitle()));
     }
@@ -60,9 +60,9 @@ public class LibraryService {
         books.values().stream()
                 .filter(Book::isAvailable)
                 .forEach(b -> System.out.println("- " + b.getTitle()));
-        }
     }
 
     public void showMostDemandedBook() {
         System.out.println("Most demanded books feature coming soon (analytics module).");
     }
+}
