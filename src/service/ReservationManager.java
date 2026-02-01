@@ -10,7 +10,7 @@ public class ReservationManager {
 
     public ReservationManager() {
         waitingQueue = new PriorityQueue<>(
-            (u1, u2) -> u2.priority - u1.priority
+            (u1, u2) -> u2.getPriority() - u1.getPriority()
         );
     }
 
